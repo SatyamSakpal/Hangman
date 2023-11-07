@@ -6,8 +6,17 @@ body {
     /* font-family: 'Patrick Hand SC', cursive; */
     font-family: 'Chilanka', cursive;
     font-weight: 400;
-    font-size: 60px;
+    font-size: 3.75rem;
     color: #116FB2;
+    box-sizing: border-box;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
 }
 
 #root {
@@ -16,8 +25,8 @@ body {
 
 main {
     height: 100%;
-    background-size: 25px 25px;
-    background-image: linear-gradient(90deg, #EAECF6 2px, transparent 0px), linear-gradient(#EAECF6 1px, transparent 0px);
+    background-size: 1.5625rem 1.5625rem;
+    background-image: linear-gradient(90deg, #EAECF6 .125rem, transparent 0rem), linear-gradient(#EAECF6 .0625rem, transparent 0rem);
     display: flex;
     flex-direction: row;
 }
@@ -41,22 +50,33 @@ main > div {
 }
 
 .word-context {
-    width: 30%;
     text-align: center;
-    padding: 5px 60px;
-    border: 8px solid #191b1d;
-    border-radius: 8px;
-    font-size: 40px;
+    padding: .3125rem 3.75rem;
+    border: .5rem solid #191b1d;
+    border-radius: .5rem;
+    font-size: 2.5rem;
 }
 
 .word {
-    margin-top: 40px;
-    font-size: 100px;
+    margin-top: 2.5rem;
+    font-size: 3.4375rem;
+    display: flex;
+    justify-content: center;
+}
+
+.alphabet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: .3125rem;
+    text-align: center;
+    min-width: 2.5rem;
+    min-height: 3.75rem;
 }
 
 .keyboard-container {
     width: 100%;
-    padding: 75px 0px;
+    padding: 4.6875rem 0rem;
     display: flex;
     justify-content: center;
 }
@@ -83,4 +103,8 @@ main > div {
 
 .key-row.bottom {
     width: 70%;
+}
+
+.key {
+    cursor: pointer;
 }
