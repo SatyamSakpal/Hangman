@@ -1,23 +1,26 @@
 import {useState, useEffect} from "react";
+import Navbar from "./Navbar";
 import Keyboard from './Keyboard'
 import Word from './Word'
 import Gallow from "./Gallow";
 
 export default function Main() {
     const alphabets = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M']
-
-    const wordToGuess = "CARROT"
-    const [alphaToGuess , setAlphaToGuess] = useState(createAlphaToGuessObj())
-    const [keys, setKeys] = useState(createKeyArray())
+    const [ wordToGuess, setWordToGuess] = useState("")
+    const [ context, setContext] = useState("")
+    const [ alphaToGuess , setAlphaToGuess] = useState([])
+    const [ keys, setKeys] = useState(createKeyArray())
     const [ misses, setMisses ] = useState(0)
     const [ won, setWon ] = useState(false)
     const [ loss, setLoss ] = useState(false)
+    const [ score, setScore ] = useState(0)
+    const [ refresh, setRefresh ] = useState(false)
     
     function createAlphaToGuessObj() {
         let objectArr = []
         Array.from(wordToGuess).forEach(alpha => {
             objectArr.push({value: alpha, guessed: false})
-        });
+        })
         return objectArr
     }
     
@@ -31,13 +34,14 @@ export default function Main() {
         })
     }
     
-    function handKeyClick(e) {
+    function handleKeyClick(e) {
         let clickedChar = e.target.textContent
         let pos = Number.parseInt(e.target.dataset.pos)
         
-        if(keys[pos].clicked || won || loss) 
+        if(keys[pos].clicked || won || loss) {
             return
-    
+        }
+
         if(!wordToGuess.includes(clickedChar)) {
             setKeyColor(pos, "red")
             setMisses(misses => misses + 1)
@@ -58,7 +62,7 @@ export default function Main() {
             })
         })
     }
-    
+
     function setKeyColor(pos, colour) {
         setKeys(prevKeys => {
             return prevKeys.map((key, idx) => {
@@ -74,28 +78,67 @@ export default function Main() {
         })
     }
 
+    function refreshGame() {
+        if(loss)
+            setScore(0)
+        setMisses(0)
+        setWon(false)
+        setLoss(false)
+        setRefresh(refresh => !refresh)
+    }
+
     useEffect(() => {
-        if( misses === 7 ) 
-        setLoss(loss => true)
+        fetch("/api/randomWord")
+            .then(res => res.json())
+            .then(data => {
+                setWordToGuess(data.word)
+                setContext(data.context)
+            })
+    },[refresh])
+
+    useEffect(() => {
+        if( misses === 7 ) {
+            setLoss(loss => true)
+            setAlphaToGuess(alphas => {
+                return alphas.map(alpha => ({...alpha, guessed: true}))
+            })
+        }
     }, [misses])
-        
+
     useEffect(() => {
-        let wordGuessed = alphaToGuess.every(alpha => alpha.guessed)
-        if(wordGuessed) 
+        if(alphaToGuess.length === 0) {
+            setWon(won => false)
+            return
+        }
+        let wordGuessed =  alphaToGuess.every(alpha => alpha.guessed)
+        if(wordGuessed) {
             setWon(won => true)
+        }
     }, [alphaToGuess])
+   
+    useEffect(() => {
+        setAlphaToGuess(createAlphaToGuessObj())
+        setKeys(createKeyArray())
+    },[wordToGuess])
     
-    console.log("lost",loss)
+    useEffect(() => {
+        if(won) {
+            setScore(prevScore => prevScore+(700-(misses*100)))
+        }
+    },[won])
 
     return (
-        <main>
-            <div className='left-half'>
-                <Word alphaToGuess={alphaToGuess} />
-                <Keyboard keys={keys} checkAlphabetExits={handKeyClick} />
-            </div>
-            <div className='right-half'>
-                <Gallow misses={misses} loss={loss} />
-            </div>
-        </main>
+        <>
+            <Navbar score={score} refreshGame={refreshGame}/>
+            <main>
+                    <div className='left-half'>
+                        <Word alphaToGuess={alphaToGuess} context={context} />
+                        <Keyboard keys={keys} checkAlphabetExits={handleKeyClick} />
+                    </div>
+                    <div className='right-half'>
+                        <Gallow misses={misses} loss={loss} />
+                    </div>
+            </main>
+        </>
     )
 }

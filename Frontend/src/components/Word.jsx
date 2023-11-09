@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Word({alphaToGuess}) {
+export default function Word({alphaToGuess,context}) {
 
     const wordLetterElements = alphaToGuess.map((alpha, idx) => {
         return (
@@ -15,7 +15,7 @@ export default function Word({alphaToGuess}) {
     return (
         <div className="word-container">
             <div className="word-context">
-                Vegetables
+                {context}
             </div>
             <div className="word">
                 {wordLetterElements}
