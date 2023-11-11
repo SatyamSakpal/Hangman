@@ -3,6 +3,7 @@ Welcome to Hangman React-Node Game, a delightful word-guessing game built using 
 
 ## Preview
   [Play Now!](https://hangman-react-node.netlify.app/)
+  
   ![preview](https://i.imgur.com/UaOA539.png)
   
 ## Setup
