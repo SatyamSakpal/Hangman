@@ -8,4 +8,4 @@ app.get("/api/randomWord", (req, res) => {
     res.json(randomData())
 })
 
-app.listen(8080)
+app.listen(process.env.PORT || 8080)
