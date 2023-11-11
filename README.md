@@ -2,6 +2,7 @@
 Welcome to Hangman React-Node Game, a delightful word-guessing game built using React for the frontend and powered by a Node.js server on the backend.
 
 ## Preview
+  [Play Now!](https://hangman-react-node.netlify.app/)
   ![preview](https://i.imgur.com/UaOA539.png)
   
 ## Setup
