@@ -131,12 +131,12 @@ export default function Main() {
         <>
             <Navbar score={score} refreshGame={refreshGame}/>
             <main>
+                    <div className='right-half'>
+                        <Gallow misses={misses} loss={loss} />
+                    </div>
                     <div className='left-half'>
                         <Word alphaToGuess={alphaToGuess} context={context} />
                         <Keyboard keys={keys} checkAlphabetExits={handleKeyClick} />
-                    </div>
-                    <div className='right-half'>
-                        <Gallow misses={misses} loss={loss} />
                     </div>
             </main>
         </>
