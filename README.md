@@ -6,6 +6,9 @@ Welcome to Hangman React-Node Game, a delightful word-guessing game built using 
   
   ![preview](https://i.imgur.com/UaOA539.png)
   
+## Explore the React Code
+  To see the React code, please visit the [development branch](https://github.com/SatyamSakpal/Hangman/tree/developement)
+  
 ## Setup
 ### Prerequisites
 Ensure you have Node.js and npm installed on your machine.
@@ -45,8 +48,6 @@ The server will run on http://localhost:8080.
   - Node.js
   - Express
 
-## Explore the React Code
-  To see the React code, please visit the [development branch](https://github.com/SatyamSakpal/Hangman/tree/developement)
 
 
 Dont let him Hang !!🥸
